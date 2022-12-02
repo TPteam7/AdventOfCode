@@ -4,21 +4,18 @@
 with open('input.txt','r') as file: # Import list of string from file
         data = file.readlines()
 
-def mostCalories(data):
+def mostCalories():
 
     calories = 0        # Calorie addition variable
-    mostCalories = 0    # Variable to be set as the current most calories
+    elfCalories = list()    # List of the elves calorie totals
 
     for x in data:      # For loop to check each elf and their calories
 
-        if x == '\n':   # If the string is a newline, check to see if the
-                        # elf had the most calories
+        if x == '\n':   # If the string is a newline, append the calorie amount
+                        # to the list of elf calories
 
-            if calories > mostCalories:     # If the elf had more calories
-                mostCalories = calories     # than the previous mostCalories, 
-                calories = 0                # replace mostCalories & reset calories
-            else:
-                calories = 0                # Reset calories
+            elfCalories.append(calories)
+            calories = 0
 
         else:           # If the string had an integer in it, add 
                         # add the integer to calories
@@ -27,8 +24,21 @@ def mostCalories(data):
                                             # numerical characters and make the string
                                             # an integer
 
-    return mostCalories # Return the amount of calories the coolest elf has
+    return sorted(elfCalories)  # Return the list of the elves calories
+
+def topElvesFunct(elfCalories):
+    topElves = 0
+    for i in range(1,4):
+        topElves += elfCalories[len(elfCalories) - i] 
+    return topElves
 
 
 if __name__ == "__main__":
-    print(mostCalories(data))
+    elfCalories = mostCalories()
+    topElves = topElvesFunct(elfCalories)
+
+    # Part 1
+    print(elfCalories[len(elfCalories) - 1])
+    
+    # Part 2
+    print(topElves)
